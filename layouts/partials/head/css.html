@@ -22,10 +22,12 @@ $combined := $CSS
 | fingerprint
 }}
 
-<style>
+<style data-css-fonts>
 {{- $fontsCss := resources.Get "css/fonts.css"
         | resources.ExecuteAsTemplate "css/fonts.css" $
 }}
 {{- $fontsCss.Content | safeCSS }}
 </style>
-<link rel="stylesheet" href="{{ $combined.RelPermalink }}" media="all">
+<style data-css-main>
+{{- $combined.Content | safeCSS }}
+</style>
