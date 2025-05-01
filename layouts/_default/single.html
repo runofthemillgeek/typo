@@ -86,12 +86,13 @@
   {{ if .Store.Get "hasMermaid" }}
   {{ $mermaidDarkTheme := default "dark" (or .Params.mermaidDarkTheme .Site.Params.mermaidDarkTheme) }}
   {{ $mermaidTheme := default "default" (or .Params.mermaidTheme .Site.Params.mermaidTheme) }}
+  {{- $mermaidJs := resources.Get "js/mermaid.js" | minify | fingerprint }}
   <script defer
     type="module"
     id="mermaid_script"
     data-light-theme="{{ $mermaidTheme }}"
-    data-dark-theme="{{ $mermaidDarkTheme }}"
-    src='{{ "js/mermaid.js" | relURL }}'>
+    data-dark-theme="{{ $mermaidDarkTheme }}">
+  {{- $mermaidJs.Content | safeJS }}
   </script>
   {{ end }}
 
