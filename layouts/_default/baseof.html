@@ -36,6 +36,13 @@
   {{ end }}
 </body>
 
-<script src="{{ "js/theme-switch.js" | relURL }}"></script>
-<script defer src="{{ "js/copy-code.js" | relURL }}"></script>
+{{- $themeSwitchJs := resources.Get "js/theme-switch.js" | minify | fingerprint }}
+{{- $copyCodeJs := resources.Get "js/copy-code.js" | minify | fingerprint }}
+
+<script>
+{{- $themeSwitchJs.Content | safeJS }}
+</script>
+<script>
+{{- $copyCodeJs.Content | safeJS }}
+</script>
 </html>
