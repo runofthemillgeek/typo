@@ -1,6 +1,10 @@
 {{- /* Generate preload tags for all fonts within assets/fonts directory */}}
 
-{{- $fonts := or (resources.Match "fonts/**.{eot,ttf,otf,woff,woff2,svg}") (resources.Match "theme-fonts/**.{eot,ttf,otf,woff,woff2,svg}") }}
-{{- range $fonts }}
+{{- $lpFonts := or (resources.Match "fonts/**-LowPriority.{eot,ttf,otf,woff,woff2,svg}") (resources.Match "theme-fonts/**-LowPriority.{eot,ttf,otf,woff,woff2,svg}") }}
+{{- $hpFonts := or (resources.Match "fonts/**.{eot,ttf,otf,woff,woff2,svg}") (resources.Match "theme-fonts/**.{eot,ttf,otf,woff,woff2,svg}") }}
+{{- range $lpFonts }}
+  <link rel="preload" as="font" href="{{ .RelPermalink }}" type="{{ .MediaType.Type }}" crossorigin fetchpriority="low">
+{{- end }}
+{{- range $hpFonts }}
   <link rel="preload" as="font" href="{{ .RelPermalink }}" type="{{ .MediaType.Type }}" crossorigin>
 {{- end }}
